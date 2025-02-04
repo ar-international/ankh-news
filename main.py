@@ -105,7 +105,6 @@ def save_posted_uuid(uuid):
 
 def fetch_2fa_code_from_email():
     # Connect to the email server
-    print(f"Login to: {EMAIL_USER}")
     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
     mail.login(EMAIL_USER, EMAIL_PASSWORD)
     mail.select("inbox")
