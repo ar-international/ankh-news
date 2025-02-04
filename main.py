@@ -65,19 +65,19 @@ def post_to_instagram(image_path, caption):
     # Attempt to log in with 2FA
     try:
         cl.login(INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD)
-    except Exception as e:
-        if "2FA" in str(e):
-            print("2FA required. Fetching verification code from email...")
-            verification_code = fetch_2fa_code_from_email()
-            if verification_code:
-                cl.login(INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD, verification_code=verification_code)
-                print("Logged in with 2FA code.")
-            else:
-                print("Failed to fetch 2FA code.")
-                return
+    except Exception:
+        # if "2FA" in str(e):
+        print("2FA required. Fetching verification code from email...")
+        verification_code = fetch_2fa_code_from_email()
+        if verification_code:
+            cl.login(INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD, verification_code=verification_code)
+            print("Logged in with 2FA code.")
         else:
-            print(f"Login failed: {e}")
+            print("Failed to fetch 2FA code.")
             return
+        #else:
+        #    print(f"Login failed: {e}")
+        #    return
 
     cl.photo_upload(image_path, caption)
 
