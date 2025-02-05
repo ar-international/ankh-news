@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  InstagramUsername:
+    Type: String
+    Description: "insta username"
+  InstagramPassword:
+    Type: String
+    Description: "insta password"
+    NoEcho: true  # Masks value in console
+  EmailUser:
+    Type: String
+    Description: "mail username"
+  EmailPassword:
+    Type: String
+    Description: "mail password"
+    NoEcho: true
+  ApiToken:
+    Type: String
+    Description: "news api token"
+    NoEcho: true
+  S3BucketName:
+    Type: String
+    Description: "s3 bucket to store data"
+
+Resources:
+  NewsPosterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.10
+      Timeout: 600
+      Environment:
+        Variables:
+          INSTAGRAM_USERNAME: !Ref InstagramUsername
+          INSTAGRAM_PASSWORD: !Ref InstagramPassword
+          EMAIL_USER: !Ref EmailUser
+          EMAIL_PASSWORD: !Ref EmailPassword
+          API_TOKEN: !Ref ApiToken
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: !Ref S3BucketName
