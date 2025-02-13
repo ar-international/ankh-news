@@ -39,6 +39,7 @@ Resources:
           EMAIL_USER: !Ref EmailUser
           EMAIL_PASSWORD: !Ref EmailPassword
           API_TOKEN: !Ref ApiToken
+          BUCKET_NAME: !Ref S3BucketName
       Policies:
         - S3FullAccessPolicy:
             BucketName: !Ref S3BucketName
